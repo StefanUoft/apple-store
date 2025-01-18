@@ -6,6 +6,7 @@ import { yellowImg } from "../utils";
 import * as THREE from "three";
 import { View } from "@react-three/drei";
 import { models, sizes } from "../constants";
+import { Canvas } from "@react-three/fiber";
 
 const Model = () => {
   const [size, setSize] = useState("small");
@@ -57,7 +58,7 @@ const Model = () => {
               item={model}
               size={size}
             />
-            <canvas
+            <Canvas
               className="w-full h-full"
               style={{
                 position: "fixed",
@@ -67,23 +68,35 @@ const Model = () => {
                 right: "0",
                 overflow: "hidden",
               }}
-              eventSource={document.getElementById('root')}
+              eventSource={document.getElementById("root")}
             >
               <View.Port />
-            </canvas>
+            </Canvas>
           </div>
           <div className="mx-auto w-full">
             <p className="text-sm font-light text-center mb-5">{model.title}</p>
             <div className="flex-center">
-                <ul className="color-container">
-                    {models.map((item,i) => (
-                        <li key={i} className="w-6 h-6 rounded-full mx-2 cursor-pointer" style={{
-                            backgroundColor: item.color[0] }} onClick={() => setModel (item)} />     
-                    ))}
-                </ul>
-<button className="size-btn-container">
-    
-</button>
+              <ul className="color-container">
+                {models.map((item, i) => (
+                  <li
+                    key={i}
+                    className="w-6 h-6 rounded-full mx-2 cursor-pointer"
+                    style={{
+                      backgroundColor: item.color[0],
+                    }}
+                    onClick={() => setModel(item)}
+                  />
+                ))}
+              </ul>
+              <button className="size-btn-container">
+                {sizes.map(({ label, value }) => (
+                  <span key={label} className="size-btn" 
+                  style={{ backgroundColor : size === value ? 'white' : 'transparent',
+                    color: size === value ? 'black' : 'white'}} onClick={() => setSize(value)}>
+                    {label}
+                  </span>
+                ))}
+              </button>
             </div>
           </div>
         </div>
